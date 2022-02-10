@@ -94,7 +94,7 @@
 
 .articles_header_sortdiv select{
   padding:5px;
-  width: 200px;
+  width: 150px;
   font-size: 20px;
 }
 
@@ -120,7 +120,7 @@
 }
 
 .art_cards {
-  min-width: 400px;
+  min-width: 350px;
   height: 250px;
   /* height: 12em; */
   border: 1px solid black;
@@ -177,7 +177,7 @@
 
 /* ***************** Article Detail ******************** */
 .article_detail_card {
-  min-width: 400px;
+  min-width: 300px;
   min-height: 300px;
   border: 1px solid black;
   /* border-radius: 15px; */
@@ -293,7 +293,7 @@
   }
   .article_detail_card {
     
-    margin-top: 1em;
+    margin-top: 4em;
     
   }
  }
