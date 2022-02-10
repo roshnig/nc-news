@@ -1,4 +1,6 @@
-.App {
+
+ /* ************************** */
+ .App {
   text-align: center;
   min-height: 100vh;
   width: 100%;
@@ -288,5 +290,10 @@
 
   .articles_header {
     margin-top: 80px;
+  }
+  .article_detail_card {
+    
+    margin-top: 1em;
+    
   }
  }
