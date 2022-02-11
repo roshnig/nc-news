@@ -22,9 +22,9 @@ export const getUser = (username) => {
     })
 }
 
-export const getArticles = (topic, sortby, page) => {
-    return newsApi.get(`/articles`, { params: { topic: topic, limit: 6, sort_by: sortby, p: page } }).then(res => {
-        return res.data.articles;
+export const getArticles = (topic, sortby, page, limit) => {
+    return newsApi.get(`/articles`, { params: { topic: topic, limit: limit, sort_by: sortby, p: page } }).then(res => {
+        return res.data;
     })
 }
 

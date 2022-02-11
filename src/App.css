@@ -10,21 +10,8 @@
   display: flex;
   flex-direction: column;
   width:100%;
-  /* background: red; */
-  
-  /* position: relative; */
-  /* animation-name: example;
-  animation-duration: 20s;
-  animation-iteration-count: infinite; */
 }
 
-/* @keyframes example {
-  0%   {background-color:red; left:0px; top:0px;}
-  25%  {background-color:yellow; left:200px; top:0px;}
-  50%  {background-color:blue; left:200px; top:200px;}
-  75%  {background-color:green; left:0px; top:200px;}
-  100% {background-color:red; left:0px; top:0px;}
-} */
 /* *************** Header ********************* */
 .header_maindiv {
   background-color: #333;
@@ -34,8 +21,7 @@
   align-items: center;
   color: white;
   width:100%;
-  position: fixed;
-  
+  position: fixed;  
 }
 
 .header_maindiv Button {
@@ -89,13 +75,13 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .articles_header_sortdiv select{
   padding:5px;
   width: 150px;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 /* *************** Article Card ********************* */
@@ -120,31 +106,16 @@
 }
 
 .art_cards {
-  min-width: 350px;
+  width: 350px;
   height: 250px;
-  /* height: 12em; */
   border: 1px solid black;
   margin-bottom: 0.75em;
   margin-right: 1em;
-  /* background-image: url("https://images.unsplash.com/photo-1559762412-627400abeec1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"); */
-   /* position: relative;  */
-
-  /* animation-name: example;
-  animation-duration: 20s;
-  animation-iteration-count: infinite;
-  background-color: honeydew; */
 }
 
-/* @keyframes example {
-  0%   {background-color:rgba(255, 0, 0, 0.336); left:0px; top:0px;}
-  25%  {background-color:rgba(255, 255, 0, 0.315); left:200px; top:0px;}
-  50%  {background-color:rgba(0, 0, 255, 0.233); left:200px; top:200px;}
-  75%  {background-color:rgba(0, 128, 0, 0.301); left:0px; top:200px;}
-  100% {background-color:rgba(255, 0, 0, 0.253); left:0px; top:0px;}
-} */
 .art_cards_contents{
   height:140px;
-  padding:0px;
+  padding:0px 5px;
 }
 .art_cards_contents_author {
   display: flex;
@@ -158,7 +129,6 @@
   display: flex;
   justify-content: space-between;
   height: 50px;
-  /* border-radius:  0% 0% 15px 15px; */
   margin-bottom: 0;
   padding: 0 15px 0 15px;
 }
@@ -272,7 +242,7 @@
   .topics_maindiv  {
     flex-direction: column;
     justify-content: flex-start;
-    width:30vw;
+    width:20vw;
     min-height: 100vh;
     
   }
@@ -291,9 +261,7 @@
   .articles_header {
     margin-top: 80px;
   }
-  .article_detail_card {
-    
-    margin-top: 4em;
-    
+  .article_detail_card {    
+    margin-top: 4em;    
   }
  }

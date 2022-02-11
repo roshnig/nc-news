@@ -86,40 +86,6 @@ const Comments = (props) => {
             })
     }
 
-    // const upVoteHandler = (comment_id) => {
-    //     const updatebody = { inc_votes: 1 }
-    //     patchComment(comment_id, updatebody).then((res) => {
-    //         console.log(res)
-    //         alert('updated')
-    //         // setComments((currComments) => {
-    //         //     const updatedArticle = { ...currArticle };
-    //         //     updatedArticle['votes']++;
-    //         //     //setVoteCount(1);
-    //         //     return updatedArticle;
-    //         // })
-    //     })
-    //         .catch((err) => {
-    //             alert(err)
-    //         })
-    // }
-
-    // const downVoteHandler = (comment_id) => {
-    //     const updatebody = { inc_votes: -1 }
-    //     patchComment(comment_id, updatebody).then((res) => {
-    //         console.log(res)
-    //         alert('updated')
-    //         // setArticle((currArticle) => {
-    //         //     const updatedArticle = { ...currArticle };
-    //         //     updatedArticle['votes']--;
-    //         //     //setVoteCount(1);
-    //         //     return updatedArticle;
-    //         // })
-    //     })
-    //         .catch((err) => {
-    //             alert(err)
-    //         })
-    // }
-
     const voteHandler = (comment_id, vote) => {
         const updatebody = { inc_votes: vote }
         setComments((currcomments) => {
@@ -131,7 +97,7 @@ const Comments = (props) => {
             let newComments = currcomments.map((comment) => {
                 return { ...comment }
             })
-            newComments = newComments.map(u => u.comment_id !== updatedComment.comment_id ? u : updatedComment);
+            newComments = newComments.map(comm => comm.comment_id !== updatedComment.comment_id ? comm : updatedComment);
             return newComments;
         })
         patchComment(comment_id, updatebody)
@@ -148,7 +114,7 @@ const Comments = (props) => {
                     let newComments = currcomments.map((comment) => {
                         return { ...comment }
                     })
-                    newComments = newComments.map(u => u.comment_id !== updatedComment.comment_id ? u : updatedComment);
+                    newComments = newComments.map(comm => comm.comment_id !== updatedComment.comment_id ? comm : updatedComment);
                     return newComments;
                 })
                 alert(err)
@@ -193,7 +159,7 @@ const Comments = (props) => {
                                 <div className="comment_footer_buttons">
                                     {(comment.author === loggedInUser.username) &&
                                         <>
-                                            <IconButton onClick={() => { setDialogOpen(true) }} color="primary">
+                                            <IconButton onClick={() => { setDialogOpen(true); setSelectedComment(comment) }} color="primary">
                                                 <EditIcon color="primary" />
                                             </IconButton>
                                             <DialogBox
@@ -201,7 +167,12 @@ const Comments = (props) => {
                                                 dialogOpen={dialogOpen}
                                                 setDialogOpen={setDialogOpen}
                                             >
-                                                <EditPostForm comment={comment} setDialogOpen={setDialogOpen}></EditPostForm>
+                                                <EditPostForm
+                                                    comment={selectedComment}
+
+                                                    setDialogOpen={setDialogOpen}
+                                                    setComments={setComments}
+                                                ></EditPostForm>
                                             </DialogBox>
                                             <IconButton onClick={() => { deleteHandler(comment.comment_id) }} color="primary">
                                                 <DeleteIcon color="primary" />

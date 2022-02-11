@@ -8,14 +8,22 @@ import ScrollContainer from "./ScrollContainer";
 const Articles = () => {
     const [articles, setArticles] = useState([]);
     const [sortby, setSortBy] = useState('created_at');
-    const [page, setPage] = useState(1)
-    let [searchParams] = useSearchParams(); //, setSearchParams
+    const [page, setPage] = useState(1);
+    const [pageCount, setPageCount] = useState(1)
+    let [searchParams] = useSearchParams();
     const topic = searchParams.get('topic');
 
+    const limit = 8;
+
     useEffect(() => {
-        getArticles(topic, sortby, page).then((res) => {
+        getArticles(topic, sortby, page, limit).then((res) => {
             console.log(res, '<<articles')
-            setArticles(res)
+            setArticles(res.articles);
+            const recordCount = res.total_count;
+            if (recordCount) {
+                const pages = Math.ceil(recordCount / limit)
+                setPageCount(pages)
+            }
         });
     }, [topic, sortby, page]);
 
@@ -30,6 +38,8 @@ const Articles = () => {
                         <option value='author'>Author</option>
                         <option value='title'>Title</option>
                         <option value='topic'>Topic</option>
+                        <option value='votes'>Votes</option>
+                        <option value='comment_count'>Comments</option>
                     </select>
                 </div>
             </nav>
@@ -74,7 +84,7 @@ const Articles = () => {
 
             </section>
             {/* </ScrollContainer> */}
-            <div className="pagination"><Pagination count={6} shape="rounded" onChange={(evt, value) => { setPage(value) }} /></div>
+            <div className="pagination"><Pagination count={pageCount} shape="rounded" onChange={(evt, value) => { setPage(value) }} /></div>
         </div>
     )
 }
