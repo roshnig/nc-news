@@ -25,7 +25,6 @@
 }
 
 .header_maindiv Button {
-  /* background-color: #ddd; */
   color: white;
 }
 
@@ -86,18 +85,6 @@
 
 /* *************** Article Card ********************* */
 
-.scroll-bg{
-  width: auto;
-   margin: 5px auto;
-}
-
-.scroll-div{
-  width: auto;
-  height: 75vh;
-  overflow: hidden;
-  overflow-y: scroll;
-}
-
 .articles_maindiv {
     display: flex;
     flex-wrap: wrap;
@@ -128,6 +115,7 @@
   color: white;
   display: flex;
   justify-content: space-between;
+  
   height: 50px;
   margin-bottom: 0;
   padding: 0 15px 0 15px;

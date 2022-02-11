@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { UserContext } from "../contexts/User";
 import Button from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';
@@ -11,11 +11,15 @@ const Header = () => {
     const { loggedInUser, isLoggedIn, setLoggedInUser, setIsLoggedIn } = useContext(UserContext);
 
     useEffect(() => {
+        // if (window.sessionStorage.getItem('username')) {
+        //     setLoggedInUser({ username: window.sessionStorage.getItem('username') })
+        //     setIsLoggedIn(true);
+        // }
+
         if (!loggedInUser.username) {
             return null
         } else {
             getUser(loggedInUser.username).then((res) => {
-                //console.log(res)
                 setLoggedInUser(res);
             })
         }
@@ -24,6 +28,7 @@ const Header = () => {
     const onSignOut = () => {
         setLoggedInUser({});
         setIsLoggedIn(false);
+        window.sessionStorage.removeItem('username');
     }
 
     const homeButtonHandler = () => {

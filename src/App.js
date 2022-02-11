@@ -1,19 +1,18 @@
 import './App.css';
-import { useState } from "react";
 import Header from "./components/Header";
 import TopicsNavbar from "./components/TopicsNavbar";
 import Articles from "./components/Articles";
 import ArticleDetail from "./components/ArticleDetail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserContext } from "./contexts/User";
+import { UserProvider } from "./contexts/User";
+
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  console.log(window.sessionStorage.getItem('username'));
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ loggedInUser, setLoggedInUser, isLoggedIn, setIsLoggedIn }}>
+      <UserProvider>
         <div className="App">
           <Header></Header>
           <section className='App_mainsection'>
@@ -25,9 +24,8 @@ function App() {
             </Routes>
           </section>
         </div>
-      </UserContext.Provider>
+      </UserProvider>
     </BrowserRouter>
-
   );
 }
 

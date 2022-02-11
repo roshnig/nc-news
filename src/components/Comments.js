@@ -22,7 +22,7 @@ const Comments = (props) => {
 
     useEffect(() => {
         getComments(props.article_id).then((res) => {
-            console.log(res, '<<Comments')
+            // console.log(res, '<<Comments')
             setComments(res)
         });
     }, [props.article_id]);

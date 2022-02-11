@@ -5,17 +5,17 @@ import { getArticle, patchArticle } from "../utils/api";
 import IconButton from '@mui/material/IconButton';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import CommentIcon from '@mui/icons-material/Comment';
 import Comments from './Comments';
 
 const ArticleDetail = () => {
-    const { loggedInUser, isLoggedIn } = useContext(UserContext);
+    const { isLoggedIn } = useContext(UserContext);
     const [article, setArticle] = useState([]);
     const [open, setOpen] = useState(false);
     const { article_id } = useParams()
 
     useEffect(() => {
         getArticle(article_id).then((res) => {
-            console.log(res, '<<articleDetail')
             setArticle(res)
         });
     }, [article_id]);
@@ -32,9 +32,10 @@ const ArticleDetail = () => {
                 updatedArticle['votes'] += vote;
                 return updatedArticle;
             })
-            patchArticle(article_id, updatebody).then((res) => {
-                console.log(res)
-            })
+            patchArticle(article_id, updatebody)
+                .then((res) => {
+                    console.log(res)
+                })
                 .catch((err) => {
                     alert(err)
                     setArticle((currArticle) => {
@@ -63,7 +64,6 @@ const ArticleDetail = () => {
 
                 </div>
                 <div className="art_card_footer">
-                    {/* {(isLoggedIn) ? */}
                     <div className="article_votesBtn_div">
                         <IconButton onClick={() => { voteHandler(1) }} color="primary">
                             <ThumbUpIcon color="primary" />
@@ -73,13 +73,10 @@ const ArticleDetail = () => {
                         </IconButton>
                         {`(${article.votes})`}
                     </div>
-                    {/* : <p>Votes ({article.votes})</p>
-                    } */}
-
                     <button
                         className="atticleDetail_commentsBtn"
                         onClick={() => { commentsBtnHandler(article.article_id) }}
-                    >{`Comments (${article.comment_count})`}</button>
+                    ><CommentIcon color="primary" />{`(${article.comment_count})`}</button>
                 </div>
             </div>
             {(open) &&

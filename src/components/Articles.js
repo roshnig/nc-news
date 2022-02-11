@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getArticles } from "../utils/api";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Pagination from '@mui/material/Pagination';
-import ScrollContainer from "./ScrollContainer";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import CommentIcon from '@mui/icons-material/Comment';
+import ReadMoreIcon from '@mui/icons-material/ReadMore';
+import { useNavigate } from "react-router-dom";
 
 const Articles = () => {
     const [articles, setArticles] = useState([]);
@@ -12,12 +15,13 @@ const Articles = () => {
     const [pageCount, setPageCount] = useState(1)
     let [searchParams] = useSearchParams();
     const topic = searchParams.get('topic');
+    let navigate = useNavigate();
 
     const limit = 8;
 
     useEffect(() => {
         getArticles(topic, sortby, page, limit).then((res) => {
-            console.log(res, '<<articles')
+            //console.log(res, '<<articles')
             setArticles(res.articles);
             const recordCount = res.total_count;
             if (recordCount) {
@@ -26,6 +30,10 @@ const Articles = () => {
             }
         });
     }, [topic, sortby, page]);
+
+    const cardClickHandler = (id) => {
+        navigate(`/articles/${id}`)
+    }
 
     return (
         <div>
@@ -43,12 +51,11 @@ const Articles = () => {
                     </select>
                 </div>
             </nav>
-            {/* <ScrollContainer> */}
-            <section className="articles_maindiv">
 
+            <section className="articles_maindiv">
                 {articles.map((article) => {
                     return (
-                        <div key={article.article_id} className="art_cards">
+                        <div key={article.article_id} className="art_cards" onClick={() => { cardClickHandler(article.article_id) }}>
                             <div className="art_cards_main">
                                 <h4>{article.topic}</h4>
                                 <div className="art_cards_contents">
@@ -57,23 +64,15 @@ const Articles = () => {
                                         <p>{article.author}</p>
                                         <p>{article.created_at.split('T')[0]}</p>
                                     </div>
-                                    {/* <div className="art_card_footer">
-                                        <p>Votes: {article.votes}</p>
-                                        <Link
-                                            className="articles_maindiv_moredetail"
-                                            to={`/articles/${article.article_id}`}
-                                        >
-                                            More Detail
-                                        </Link>
-                                    </div> */}
                                 </div>
                                 <div className="art_card_footer">
-                                    <p>Votes: {article.votes}</p>
+                                    <p><ThumbUpIcon color="primary" /> {article.votes}</p>
+                                    <p><CommentIcon color="primary" />{article.comment_count}</p>
                                     <Link
                                         className="articles_maindiv_moredetail"
                                         to={`/articles/${article.article_id}`}
-                                    >
-                                        More Detail
+                                    ><ReadMoreIcon color="primary" />
+
                                     </Link>
                                 </div>
                             </div>
@@ -83,7 +82,6 @@ const Articles = () => {
                 })}
 
             </section>
-            {/* </ScrollContainer> */}
             <div className="pagination"><Pagination count={pageCount} shape="rounded" onChange={(evt, value) => { setPage(value) }} /></div>
         </div>
     )
