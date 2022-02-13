@@ -15,10 +15,7 @@ const ArticleDetail = () => {
     const [article, setArticle] = useState([]);
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const { articleVoteCount, setArticleVoteCount } = useState(0);
     const [status, setStatusBase] = React.useState("");
-
-
     const { article_id } = useParams()
 
     useEffect(() => {
@@ -42,10 +39,9 @@ const ArticleDetail = () => {
             })
             patchArticle(article_id, updatebody)
                 .then((res) => {
-                    console.log(res)
+                    //console.log(res)
                 })
                 .catch((err) => {
-                    console.log(err, '<<err')
                     alert(err)
                     //setStatusBase({ msg: { err }, key: Math.random() });
                     setArticle((currArticle) => {
@@ -79,7 +75,7 @@ const ArticleDetail = () => {
                 </div>
                 <div className="art_card_footer">
                     <div className="article_votesBtn_div">
-                        <IconButton onClick={() => { voteHandler(1) }} color="primary">
+                        <IconButton onClick={() => { voteHandler(1) }}>
                             <ThumbUpIcon color="primary" />
                         </IconButton>
                         <IconButton onClick={() => { voteHandler(-1) }} color="primary">
@@ -90,7 +86,7 @@ const ArticleDetail = () => {
                     <button
                         className="atticleDetail_commentsBtn"
                         onClick={() => { commentsBtnHandler(article.article_id) }}
-                    ><CommentIcon color="primary" />{`(${article.comment_count})`}</button>
+                    ><CommentIcon color="primary" /> {`(${article.comment_count})`}</button>
                 </div>
             </div>
             {(open) &&

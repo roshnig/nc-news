@@ -108,7 +108,7 @@ const Comments = (props) => {
             })
             patchComment(comment_id, updatebody)
                 .then((res) => {
-                    console.log(res)
+                    //console.log(res)
                 })
                 .catch((err) => {
                     setComments((currcomments) => {

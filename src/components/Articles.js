@@ -25,7 +25,7 @@ const Articles = () => {
 
     useEffect(() => {
         getArticles(topic, sortby, page, limit).then((res) => {
-            console.log(res, '<<articles')
+            //console.log(res, '<<articles')
             setArticles(res.articles);
             setIsLoading(false);
             const recordCount = res.total_count;
