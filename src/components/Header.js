@@ -11,11 +11,10 @@ const Header = () => {
     const { loggedInUser, isLoggedIn, setLoggedInUser, setIsLoggedIn } = useContext(UserContext);
 
     useEffect(() => {
-        // if (window.sessionStorage.getItem('username')) {
-        //     setLoggedInUser({ username: window.sessionStorage.getItem('username') })
+        // if (localStorage.getItem('username')) {
+        //     setLoggedInUser({ username: localStorage.getItem('username') })
         //     setIsLoggedIn(true);
         // }
-
         if (!loggedInUser.username) {
             return null
         } else {
@@ -28,7 +27,7 @@ const Header = () => {
     const onSignOut = () => {
         setLoggedInUser({});
         setIsLoggedIn(false);
-        window.sessionStorage.removeItem('username');
+        //localStorage.removeItem('username');
     }
 
     const homeButtonHandler = () => {

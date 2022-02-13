@@ -7,16 +7,24 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import CommentIcon from '@mui/icons-material/Comment';
 import Comments from './Comments';
+import CircularLoader from './CircularLoader';
+import AlertMessage from "./AlertMessage";
 
 const ArticleDetail = () => {
     const { isLoggedIn } = useContext(UserContext);
     const [article, setArticle] = useState([]);
     const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const { articleVoteCount, setArticleVoteCount } = useState(0);
+    const [status, setStatusBase] = React.useState("");
+
+
     const { article_id } = useParams()
 
     useEffect(() => {
         getArticle(article_id).then((res) => {
-            setArticle(res)
+            setArticle(res);
+            setIsLoading(false)
         });
     }, [article_id]);
 
@@ -37,7 +45,9 @@ const ArticleDetail = () => {
                     console.log(res)
                 })
                 .catch((err) => {
+                    console.log(err, '<<err')
                     alert(err)
+                    //setStatusBase({ msg: { err }, key: Math.random() });
                     setArticle((currArticle) => {
                         const updatedArticle = { ...currArticle };
                         updatedArticle['votes'] -= vote;
@@ -45,13 +55,16 @@ const ArticleDetail = () => {
                     })
                 })
         } else {
-            alert('Please login first !!!')
+            setStatusBase({ msg: "Please login first!", key: Math.random() });
         }
 
     }
 
-    return (
+    return isLoading ? (
+        <CircularLoader></CircularLoader>
+    ) : (
         <div className="article_detail_card">
+            {status ? <AlertMessage key={status.key} message={status.msg} /> : null}
             <div className="article_detailcard_main">
                 <h3>{article.topic}</h3>
                 <div className="art_detailcard_contents">
@@ -59,7 +72,8 @@ const ArticleDetail = () => {
                     <p className="article_body">{article.body}</p>
                     <div className="art_cards_contents_author">
                         <p>{article.author}</p>
-                        <p>{article.created_at}</p>
+                        <p>{
+                            (article.created_at) ? article.created_at.split('T')[0] : ''}</p>
                     </div>
 
                 </div>

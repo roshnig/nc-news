@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getArticles } from "../utils/api";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -6,13 +7,16 @@ import Pagination from '@mui/material/Pagination';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import CommentIcon from '@mui/icons-material/Comment';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
-import { useNavigate } from "react-router-dom";
+import CircularLoader from './CircularLoader';
+
 
 const Articles = () => {
     const [articles, setArticles] = useState([]);
     const [sortby, setSortBy] = useState('created_at');
     const [page, setPage] = useState(1);
-    const [pageCount, setPageCount] = useState(1)
+    const [pageCount, setPageCount] = useState(1);
+    const [isLoading, setIsLoading] = useState(true);
+
     let [searchParams] = useSearchParams();
     const topic = searchParams.get('topic');
     let navigate = useNavigate();
@@ -23,6 +27,7 @@ const Articles = () => {
         getArticles(topic, sortby, page, limit).then((res) => {
             //console.log(res, '<<articles')
             setArticles(res.articles);
+            setIsLoading(false);
             const recordCount = res.total_count;
             if (recordCount) {
                 const pages = Math.ceil(recordCount / limit)
@@ -35,7 +40,9 @@ const Articles = () => {
         navigate(`/articles/${id}`)
     }
 
-    return (
+    return isLoading ? (
+        <CircularLoader></CircularLoader>
+    ) : (
         <div>
             <nav className="articles_header">
                 <h2>{(topic) ? topic : 'Trending News'}</h2>

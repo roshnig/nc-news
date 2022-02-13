@@ -8,6 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { UserContext } from "../contexts/User";
 import { getUsers } from "../utils/api";
+import AlertMessage from "./AlertMessage";
 
 
 const LoginForm = () => {
@@ -16,6 +17,7 @@ const LoginForm = () => {
     const [lopen, setlOpen] = React.useState(false);
     const [username, setUsername] = React.useState('');
     const [isValid, setIsValid] = React.useState(false);
+    const [status, setStatusBase] = React.useState("");
 
     React.useEffect(() => {
         getUsers().then((res) => {
@@ -39,16 +41,16 @@ const LoginForm = () => {
                 return user.username === username
             })
             if (user.length === 0) {
-                alert('user not found');
+                setStatusBase({ msg: "User not found! Please try to login with happyamy2016, grumpy19 or jessjelly", key: Math.random() });
             } else {
                 const loggedUser = user[0];
                 setLoggedInUser(loggedUser);
                 setIsLoggedIn(true);
                 setlOpen(false);
-                window.sessionStorage.setItem('username', loggedUser.username);
+                //localStorage.setItem('username', loggedUser.username);
             }
         } else {
-            alert('username is not valid')
+            setStatusBase({ msg: "Username is not valid", key: Math.random() });
         }
     }
 
@@ -61,12 +63,13 @@ const LoginForm = () => {
             setIsValid(true)
         } else {
             setIsValid(false)
-            alert('username should contain letters and numbers only')
+            setStatusBase({ msg: "Username should contain letters and numbers only.", key: Math.random() });
         }
     }
 
     return (
         <div>
+            {status ? <AlertMessage key={status.key} message={status.msg} /> : null}
             <Button variant="outlined" onClick={handleLClickOpen}>
                 Login
             </Button>
@@ -85,7 +88,7 @@ const LoginForm = () => {
                             type="text"
                             fullWidth
                             variant="standard"
-                            placeholder="Please enter your username ...."
+                            placeholder="Eg:'jessjelly' or 'grumpy19 ...."
                             required={true}
                             onChange={usernameHandler}
                         />

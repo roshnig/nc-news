@@ -8,7 +8,8 @@ import { UserProvider } from "./contexts/User";
 
 
 function App() {
-  console.log(window.sessionStorage.getItem('username'));
+  //console.log(window.sessionStorage.getItem('username'));
+  // console.log(localStorage.getItem('username'));
 
   return (
     <BrowserRouter>

@@ -9,27 +9,32 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DialogBox from "./DialogBox";
 import EditPostForm from './EditPostForm';
-
+import CircularLoader from './CircularLoader';
+import AlertMessage from "./AlertMessage";
 
 const Comments = (props) => {
     const [comments, setComments] = useState([]);
+    const [status, setStatusBase] = React.useState("");
     const [input, setInput] = useState('');
     const { loggedInUser, isLoggedIn } = useContext(UserContext);
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [selectedComment, setSelectedComment] = useState({})
+    const [selectedComment, setSelectedComment] = useState({});
+    const { commentVoteCount, setCommentVoteCount } = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
 
     let img = 'https://freepikpsd.com/file/2019/10/default-profile-picture-png-1-Transparent-Images.png';
 
     useEffect(() => {
         getComments(props.article_id).then((res) => {
             // console.log(res, '<<Comments')
-            setComments(res)
+            setComments(res);
+            setIsLoading(false);
         });
     }, [props.article_id]);
 
     const newPostHandler = (evt) => {
         if (!isLoggedIn) {
-            alert('pls login first')
+            setStatusBase({ msg: "Please login first!", key: Math.random() });
         } else {
             setInput(evt.target.value);
         }
@@ -37,7 +42,7 @@ const Comments = (props) => {
 
     const postSubmitHandler = (evt) => {
         if (input.length === 0) {
-            alert("Nothing to post here!! Please type your comment.")
+            setStatusBase({ msg: "Nothing to post here! Please type your comment", key: Math.random() });
         } else {
             const newComment = {};
             newComment['body'] = input;
@@ -59,8 +64,8 @@ const Comments = (props) => {
                 setInput('');
             })
                 .catch((err) => {
-                    console.log(err)
                     alert(err)
+                    //setStatusBase({ msg: { err }, key: Math.random() });
                 })
         }
     }
@@ -81,48 +86,57 @@ const Comments = (props) => {
                 })
             })
             .catch((err) => {
-                console.log(err)
                 alert(err)
+                //setStatusBase({ msg: { err }, key: Math.random() });
             })
     }
 
     const voteHandler = (comment_id, vote) => {
-        const updatebody = { inc_votes: vote }
-        setComments((currcomments) => {
-            const oldComment = currcomments.filter((comment) => {
-                return comment.comment_id === comment_id
-            });
-            const updatedComment = { ...oldComment[0] };
-            updatedComment['votes'] += vote;
-            let newComments = currcomments.map((comment) => {
-                return { ...comment }
-            })
-            newComments = newComments.map(comm => comm.comment_id !== updatedComment.comment_id ? comm : updatedComment);
-            return newComments;
-        })
-        patchComment(comment_id, updatebody)
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => {
-                setComments((currcomments) => {
-                    const oldComment = currcomments.filter((comment) => {
-                        return comment.comment_id === comment_id
-                    });
-                    const updatedComment = { ...oldComment[0] };
-                    updatedComment['votes'] -= vote;
-                    let newComments = currcomments.map((comment) => {
-                        return { ...comment }
-                    })
-                    newComments = newComments.map(comm => comm.comment_id !== updatedComment.comment_id ? comm : updatedComment);
-                    return newComments;
+        if (isLoggedIn) {
+            const updatebody = { inc_votes: vote }
+            setComments((currcomments) => {
+                const oldComment = currcomments.filter((comment) => {
+                    return comment.comment_id === comment_id
+                });
+                const updatedComment = { ...oldComment[0] };
+                updatedComment['votes'] += vote;
+                let newComments = currcomments.map((comment) => {
+                    return { ...comment }
                 })
-                alert(err)
+                newComments = newComments.map(comm => comm.comment_id !== updatedComment.comment_id ? comm : updatedComment);
+                return newComments;
             })
+            patchComment(comment_id, updatebody)
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((err) => {
+                    setComments((currcomments) => {
+                        const oldComment = currcomments.filter((comment) => {
+                            return comment.comment_id === comment_id
+                        });
+                        const updatedComment = { ...oldComment[0] };
+                        updatedComment['votes'] -= vote;
+                        let newComments = currcomments.map((comment) => {
+                            return { ...comment }
+                        })
+                        newComments = newComments.map(comm => comm.comment_id !== updatedComment.comment_id ? comm : updatedComment);
+                        return newComments;
+                    })
+                    alert(err)
+                })
+        } else {
+            //alert('Please login first !!!')
+            setStatusBase({ msg: "Please login first!", key: Math.random() });
+        }
+
     }
 
-    return (
+    return isLoading ? (
+        <CircularLoader></CircularLoader>
+    ) : (
         <div>
+            {status ? <AlertMessage key={status.key} message={status.msg} /> : null}
             <div className="comment_postcomment_div">
                 <img
                     className="comment_img"
