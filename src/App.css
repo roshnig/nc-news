@@ -6,6 +6,11 @@
   width: 100%;
 }
 
+.notFound {
+  margin:10rem auto;
+  font-size: xx-large;
+}
+
 .App_mainsection {
   display: flex;
   flex-direction: column;

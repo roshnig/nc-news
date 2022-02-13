@@ -22,6 +22,7 @@ function App() {
               <Route path="/" element={<Articles></Articles>}></Route>
               <Route path="/articles" element={<Articles></Articles>}></Route>
               <Route path="/articles/:article_id" element={<ArticleDetail></ArticleDetail>}></Route>
+              <Route path="*" element={<p className='notFound'>Page Not Found !!</p>} />
             </Routes>
           </section>
         </div>
