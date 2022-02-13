@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getArticles } from "../utils/api";
-import { Navigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Pagination from '@mui/material/Pagination';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -24,16 +24,20 @@ const Articles = () => {
     const limit = 8;
 
     useEffect(() => {
-        getArticles(topic, sortby, page, limit).then((res) => {
-            //console.log(res, '<<articles')
-            setArticles(res.articles);
-            setIsLoading(false);
-            const recordCount = res.total_count;
-            if (recordCount) {
-                const pages = Math.ceil(recordCount / limit)
-                setPageCount(pages)
-            }
-        });
+        getArticles(topic, sortby, page, limit).
+            then((res) => {
+                //console.log(res, '<<articles')
+                setArticles(res.articles);
+                setIsLoading(false);
+                const recordCount = res.total_count;
+                if (recordCount) {
+                    const pages = Math.ceil(recordCount / limit)
+                    setPageCount(pages)
+                }
+            })
+            .catch((err) => {
+                alert(err);
+            })
     }, [topic, sortby, page]);
 
     const cardClickHandler = (id) => {

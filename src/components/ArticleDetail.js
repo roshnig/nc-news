@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../contexts/User";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getArticle, patchArticle } from "../utils/api";
 import IconButton from '@mui/material/IconButton';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -16,13 +16,19 @@ const ArticleDetail = () => {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [status, setStatusBase] = React.useState("");
-    const { article_id } = useParams()
+    const { article_id } = useParams();
+    let navigate = useNavigate();
 
     useEffect(() => {
-        getArticle(article_id).then((res) => {
-            setArticle(res);
-            setIsLoading(false)
-        });
+        getArticle(article_id)
+            .then((res) => {
+                setArticle(res);
+                setIsLoading(false)
+            })
+            .catch((err) => {
+                alert(err)
+                navigate(`/articles`)
+            })
     }, [article_id]);
 
     const commentsBtnHandler = () => {
