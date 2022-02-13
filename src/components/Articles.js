@@ -25,7 +25,7 @@ const Articles = () => {
 
     useEffect(() => {
         getArticles(topic, sortby, page, limit).then((res) => {
-            //console.log(res, '<<articles')
+            console.log(res, '<<articles')
             setArticles(res.articles);
             setIsLoading(false);
             const recordCount = res.total_count;
@@ -54,7 +54,6 @@ const Articles = () => {
                         <option value='title'>Title</option>
                         <option value='topic'>Topic</option>
                         <option value='votes'>Votes</option>
-                        <option value='comment_count'>Comments</option>
                     </select>
                 </div>
             </nav>

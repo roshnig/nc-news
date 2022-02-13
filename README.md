@@ -3,7 +3,7 @@
 # Link
 An online hosted version of this repository can be found at:
 
-https://6206a3fdba5b031bcbcf6134--rosh-newsfeed-site.netlify.app/
+https://rosh-newsfeed-site.netlify.app/
 
 
 # About
