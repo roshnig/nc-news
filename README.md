@@ -39,6 +39,8 @@ You are required to login if you want to add comment or want to vote. You can te
 "weegembump"
 "jessjelly"
 
+If you want to test this app locally, just run command 'npm start' in your command line. You must be on project directory before you run this command. 
+
 
 # Backend repo
 This project's backend repo can be cloned from here-
