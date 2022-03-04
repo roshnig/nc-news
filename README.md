@@ -6,6 +6,10 @@ This is a simple news feed app where you can see news feed about different topic
 
 ## Setup
 
+### System requirements
+
+You will need to install Node v17.0.1 to run this repository.
+
 ### Cloning the respository
 If you want to work with this repository locally you will need to clone it onto your local machine. To do this, navigate to where in your file system you want the repository to be saved in the command line, and run the following command:
 ```
